@@ -9,5 +9,7 @@ class Api {
         else
             "https://piazza-web-00hg.onrender.com"
         val rootUrl = "$baseUrl/"
+        val loginUrl = "$baseUrl/login"
+
     }
 }

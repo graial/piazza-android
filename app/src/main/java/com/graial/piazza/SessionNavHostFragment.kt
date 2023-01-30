@@ -1,5 +1,7 @@
 package com.graial.piazza
 
+import android.os.Bundle
+import androidx.fragment.app.activityViewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import dev.hotwire.turbo.config.TurboPathConfiguration
@@ -7,8 +9,10 @@ import dev.hotwire.turbo.session.TurboSessionNavHostFragment
 import kotlin.reflect.KClass
 
 class SessionNavHostFragment : TurboSessionNavHostFragment() {
-    override var sessionName = "main"
+    override var sessionName = ""
     override var startLocation = Api.rootUrl
+
+    val tabsViewModel: TabsViewModel by activityViewModels()
 
     override val registeredActivities: List<KClass<out AppCompatActivity>>
         get() = listOf()
@@ -19,6 +23,12 @@ class SessionNavHostFragment : TurboSessionNavHostFragment() {
             WebFragment::class
         )
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        sessionName = "tab+$tag"
+        tabsViewModel.tabForId(id)?.url?.let { startLocation = it }
+
+        super.onCreate(savedInstanceState)
+    }
     override fun onSessionCreated() {
         super.onSessionCreated()
         session.webView.settings.userAgentString =
