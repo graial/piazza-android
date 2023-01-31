@@ -2,7 +2,7 @@ package com.graial.piazza
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+import android.content.Intent
 import android.widget.ViewFlipper
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,6 +21,18 @@ class MainActivity : AppCompatActivity(), TurboActivity {
 
         configureTurboDelegates()
         configureTabs()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navigateDeepLink()
+    }
+
+    private fun navigateDeepLink() {
+        if(intent.action == Intent.ACTION_VIEW
+            && intent.data != null) {
+            delegate.navigate(intent.data.toString())
+        }
     }
 
     private fun configureTurboDelegates() {

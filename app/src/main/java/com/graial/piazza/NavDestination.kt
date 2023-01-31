@@ -65,7 +65,7 @@ interface NavDestination: TurboNavDestination {
     private fun isTabUrl(url: String): Boolean {
         return tabsViewModel.tabForUrl(url) != null
     }
-    
+
     private fun slideAnimation(): NavOptions {
         return navOptions {
             anim {
