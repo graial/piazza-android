@@ -1,5 +1,7 @@
 package com.graial.piazza
 
+import android.os.Bundle
+import android.view.View
 import dev.hotwire.turbo.fragments.TurboWebFragment
 import dev.hotwire.turbo.nav.TurboNavGraphDestination
 
@@ -7,6 +9,13 @@ import dev.hotwire.turbo.nav.TurboNavGraphDestination
 open class WebFragment :
     TurboWebFragment(), NavDestination {
 
+    override fun onViewCreated(
+        view: View, savedInstanceState: Bundle?
+    ) {
+        super.onViewCreated(view, savedInstanceState)
+
+        configureMenuClickListener()
+    }
     override fun onVisitErrorReceived(
         location: String, errorCode: Int
     ) {
@@ -20,5 +29,17 @@ open class WebFragment :
         super.onColdBootPageCompleted(location)
 
         session.webView.attachWebBridge(requireContext())
+    }
+
+    override fun onVisitStarted(location: String) {
+        super.onVisitStarted(location)
+        toolbarForNavigation()?.menu?.clear()
+    }
+
+    private fun configureMenuClickListener() {
+        toolbarForNavigation()?.setOnMenuItemClickListener {
+            session.webView.click(it.itemId)
+            return@setOnMenuItemClickListener true
+        }
     }
 }
