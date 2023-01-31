@@ -35,6 +35,10 @@ class SessionNavHostFragment : TurboSessionNavHostFragment() {
         super.onSessionCreated()
         session.webView.settings.userAgentString =
             "Piazza Turbo Native Android"
+
+        session.webView.addJavascriptInterface(
+            WebBridgeMessageHandler(this), "messageHandler"
+        )
     }
 
     override val pathConfigurationLocation: TurboPathConfiguration.Location
