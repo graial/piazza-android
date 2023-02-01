@@ -12,5 +12,6 @@ class Api {
         val profileUrl = "$baseUrl/profile"
         val loginUrl = "$baseUrl/login"
         val myAdsUrl = "$baseUrl/my_listings"
+        val savedAdsUrl = "$baseUrl/saved_listings"
     }
 }

@@ -15,7 +15,11 @@
     },
     {
       "patterns": [
-        "^$", "^/$", "^/profile$", "^/my_listings$"
+        "^$",
+        "^/$",
+        "/profile$",
+        "/my_listings$",
+        "/saved_listings$"
       ],
       "properties": {
         "uri": "turbo://fragment/web/tab",
