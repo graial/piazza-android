@@ -1,5 +1,8 @@
 package com.graial.piazza
 
+import android.net.Uri
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent.SHARE_STATE_ON
 import androidx.navigation.NavOptions
 import androidx.navigation.navOptions
 import dev.hotwire.turbo.config.TurboPathConfigurationProperties
@@ -7,6 +10,7 @@ import dev.hotwire.turbo.config.context
 import dev.hotwire.turbo.delegates.TurboFragmentDelegate
 import dev.hotwire.turbo.nav.TurboNavDestination
 import dev.hotwire.turbo.nav.TurboNavPresentationContext
+import java.net.URI
 import java.net.URL
 
 interface NavDestination: TurboNavDestination {
@@ -20,7 +24,7 @@ interface NavDestination: TurboNavDestination {
                 false
             }
             isExternal(newLocation) -> {
-                //TODO open in browser
+               launchExternalLocation(newLocation)
                 false
             }
             isPathDirective(newLocation) -> {
@@ -91,5 +95,16 @@ interface NavDestination: TurboNavDestination {
 
     private fun isExternal(location: String): Boolean {
         return !location.startsWith(Api.rootUrl)
+    }
+
+    private fun launchExternalLocation(location: String) {
+        val context = fragment.context ?: return
+
+        CustomTabsIntent.Builder()
+            .setShowTitle(true)
+            .setShareState(SHARE_STATE_ON)
+            .setUrlBarHidingEnabled(false)
+            .build()
+            .launchUrl(context, Uri.parse(location))
     }
 }

@@ -34,6 +34,14 @@
         "context": "modal",
         "uri": "turbo://fragment/web/modal"
       }
+    },
+    {
+      "patterns": [
+        ".+\\.(?:bmp|gif|heic|jpg|png|svg|webp)"
+      ],
+      "properties": {
+        "uri": "turbo://fragment/image_viewer"
+      }
     }
   ]
 }
